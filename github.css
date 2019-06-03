@@ -145,6 +145,7 @@
  .gt-no-activity{
  	padding: 10px 5px;
  	text-align: center;
+    color: #32cd32;
  }
  .gt-activity .gt-avatar-cnt{
  	float: left;
@@ -284,5 +285,5 @@
  .gt-loading-txt{
  	text-align: center;
  	padding: 5px 0;
- 	color: #999;
+ 	color: #aaa;
  }

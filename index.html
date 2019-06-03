@@ -8,16 +8,29 @@
     <body>
         <div id="myProfile">
         </div>
+            <button id="Delete" onclick="del()">
+                Delete
+            </button>
         <!-- Adding underscore.js dependency -->
         <script type="text/javascript" src="underscore-min.js"></script>
         <!-- Adding github.js library -->
         <script type="text/javascript" src="github.js"></script>
         <!-- Using library functions -->
         <script type="text/javascript">
-            Github.userActivity({
-                username: 'akshaykumar6',
-                selector: '#myProfile'
+            Github.gistActivity({
+                username: 'BXYMartin',
+                selector: '#myProfile',
+                OAuth: '764fbb9aa491055ce7dbb520a17515a9515fe8f2'
             });
+function del() {
+    console.log("Hit!");
+};
         </script>
+    <script>
+        window.onload = function() {
+            console.log("in");
+            Github.hasPost({OAuth: '764fbb9aa491055ce7dbb520a17515a9515fe8f2', selector: '#Delete', path: '2019-06-02-15-32-23.markdown'});
+        }
+    </script>
     </body>
 </html>
