@@ -111,11 +111,11 @@
     Github.delPost = function (options) {
       if(options = gitMethods.initialize(options, ['path','selector'], 0)){
         var delUrl = gitApiUrl + 'repos/Catherine9811/OO-Posts/contents/' + options.path;
-        var data, request, param;
-        param.message = "Checked";
+        var data, request;
 
+          console.log(delUrl);
         request = new XMLHttpRequest();
-        request.open(options.path, true);
+        request.open("GET", delUrl, true);
         // Use OAuth token if available
         if (options.OAuth) {
           request.setRequestHeader('Authorization', 'Token ' + options.OAuth);
@@ -124,14 +124,22 @@
         request.onload = function(e) {
           if (request.status >= 200 && request.status < 400){
             data = JSON.parse(request.responseText);
-            param.sha = data.sha;
-            gitMethods.delData(delUrl, options, param, gitMethods.setDelPostHTML);
+              console.log(data);
+            gitMethods.delData(delUrl, options, {"message": "Error Resolved By Http Request", "sha": data.sha }, gitMethods.setDelPostHTML);
           } else {
             // Unsuccessful request - invalid username/ lost internet connectivity/ exceeded rate limit/ API URL not found
             gitMethods.renderContent(gitMethods.getRenderedHTML(gitTemplates.notFoundTpl, data), options.selector,'.gt-container');
             console.error('An error occurred while connecting to GitHub API.');
           }
         }
+
+
+        request.onerror = function(e) {
+          console.error('An error occurred while connecting to GitHub API.');
+        };
+
+        request.send();
+
       } else{
         console.error("Parameters not passed correctly");
       }
@@ -337,6 +345,9 @@
       errorNotFound: '<div class="gt-no-activity"><span> Error Resolved </span></div>',
       notFoundTpl: '<div class="gt-no-activity">'+
                         '<span> Error Resolved </span>'+
+                     '</div>',
+      FoundTpl: '<div class="gt-still-activity">'+
+                        '<span> Error Unresolved </span>'+
                      '</div>'
     };
 
@@ -538,7 +549,8 @@
       delData: function(url, options, param, callback){
         var data, request;
         request = new XMLHttpRequest();
-        request.open('DELETE', '-d', param, url, true);
+          console.log(param);
+        request.open('DELETE', url, true);
         // Use OAuth token if available
         if (options.OAuth) {
           request.setRequestHeader('Authorization', 'Token ' + options.OAuth);
@@ -547,6 +559,7 @@
         request.onload = function(e) {
           if (request.status >= 200 && request.status < 400){
             data = JSON.parse(request.responseText);
+              console.log(data);
             callback(data, options);
           } else {
             // Unsuccessful request - invalid username/ lost internet connectivity/ exceeded rate limit/ API URL not found
@@ -559,7 +572,7 @@
           console.error('An error occurred while connecting to GitHub API.');
         };
 
-        request.send();
+        request.send(JSON.stringify(param));
       },
 
       // Utility for asynchronous AJAX calls
@@ -676,6 +689,12 @@
 
       // Render the content to the selector or subSelector
       renderButton: function(choice, selector){
+          if (choice) {
+            gitMethods.renderContent(gitMethods.getRenderedHTML(gitTemplates.notFoundTpl, null), selector,'.gt-header');
+          }
+          else {
+            gitMethods.renderContent(gitMethods.getRenderedHTML(gitTemplates.FoundTpl, null), selector,'.gt-header');
+          }
         var selectorDivs = document.querySelectorAll(selector);
 
         for (var i = 0; i < selectorDivs.length; i++) {

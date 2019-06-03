@@ -147,6 +147,11 @@
  	text-align: center;
     color: #32cd32;
  }
+ .gt-still-activity{
+ 	padding: 10px 5px;
+ 	text-align: center;
+    color: #dc143c;
+ }
  .gt-activity .gt-avatar-cnt{
  	float: left;
  	width: 5%;
