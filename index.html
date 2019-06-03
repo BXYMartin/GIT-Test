@@ -1,21 +1,23 @@
+<!DOCTYPE html>
 <html>
-
     <head>
-        <link rel='stylesheet' href='github.css'/>
-
-        // Add underscore.js 
-        <script type="text/javascript" src="underscore-min.js"></script>
-        <script type="text/javascript" src='github.js'></script>
+        <title>My App</title>
+        <!-- Adding CSS stylesheet -->
+        <link rel="stylesheet" type="text/css" href="github.css">
     </head>
-
     <body>
-    <script>
-        Github.userProfile({
-          username: "jashkenas",
-            selector: ".user-1"
-            
-        });
-    </script>
+        <div id="myProfile">
+        </div>
+        <!-- Adding underscore.js dependency -->
+        <script type="text/javascript" src="underscore-min.js"></script>
+        <!-- Adding github.js library -->
+        <script type="text/javascript" src="github.js"></script>
+        <!-- Using library functions -->
+        <script type="text/javascript">
+            Github.userActivity({
+                username: 'akshaykumar6',
+                selector: '#myProfile'
+            });
+        </script>
     </body>
-
 </html>
