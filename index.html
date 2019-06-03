@@ -12,16 +12,15 @@
         <script type="text/javascript" src="underscore-min.js"></script>
         <!-- Adding github.js library -->
         <script type="text/javascript" src="github.js"></script>
+        <script type="text/javascript" src="encrypt.js"></script>
         <!-- Using library functions -->
         <script type="text/javascript">
+            var auth = Encryption.decrypt("97bdb22cd5e6519f625ffdd9db57f9220a985677eaa1345042527368ea1ac372187ba84740355e9b03070340");
             function del() {
-                console.log("Hit!");
-                Github.delPost({OAuth: '3177ce641699c5631c760f19ebb75fb781154374', selector: '#Delete', path: '2019-06-02-15-32-22.markdown'});
+                Github.delPost({OAuth: "\"" + auth + "\"", selector: '#Delete', path: '2019-06-02-15-32-22.markdown'});
             };
-        </script>
-        <script>
             window.onload = function() {
-                Github.hasPost({OAuth: '3177ce641699c5631c760f19ebb75fb781154374', selector: '#Delete', path: '2019-06-02-15-32-22.markdown'});
+                Github.hasPost({OAuth: auth, selector: '#Delete', path: '2019-06-02-15-32-22.markdown'});
             }
         </script>
     </body>
